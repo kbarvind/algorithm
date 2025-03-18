@@ -1,0 +1,35 @@
+import re
+
+def convert_to_regex(endpoint):
+    """Convert an endpoint with path parameters to a regex pattern."""
+    regex_pattern = re.sub(r'\{[^}]+\}', r'[^/]+', endpoint)
+    return f'^{regex_pattern}$'
+
+def filter_matching_endpoints(endpoints, path_pattern):
+    """Filter endpoints that match the provided path pattern."""
+    regex = convert_to_regex(path_pattern)
+    return [endpoint for endpoint in endpoints if re.match(regex, endpoint)]
+
+# Input list of endpoints
+endpoints = [
+    "/api/books/1",
+    "/api/books/2",
+    "/api/books/3",
+    "/api/books/abc",
+    "/api/name/2/display",
+    "/api/name/tyu/display",
+    "/api/name/5/display",
+    "/apis/test/display",
+    "/api/books/xyz"
+]
+
+# Path pattern with a dynamic parameter
+path_pattern = "/api/name/{id}/display"
+
+# Get matching endpoints
+matching_endpoints = filter_matching_endpoints(endpoints, path_pattern)
+
+# Print results
+print("Matching Endpoints:")
+for endpoint in matching_endpoints:
+    print(endpoint)
