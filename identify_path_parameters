@@ -1,0 +1,27 @@
+import re
+
+def identify_path_parameter_endpoints(endpoints):
+    """Identify endpoints that contain path parameters in curly braces."""
+    path_param_endpoints = [endpoint for endpoint in endpoints if re.search(r'\{[^}]+\}', endpoint)]
+    return path_param_endpoints
+
+# Input list of endpoints
+endpoints = [
+    "/api/books/1",
+    "/api/books/2",
+    "/api/books/{id}",
+    "/api/books/abc",
+    "/api/name/2/display",
+    "/api/name/{name}/display",
+    "/api/name/5/display",
+    "/apis/test/display",
+    "/api/books/xyz"
+]
+
+# Find endpoints with path parameters
+path_param_endpoints = identify_path_parameter_endpoints(endpoints)
+
+# Print results
+print("Endpoints with Path Parameters:")
+for endpoint in path_param_endpoints:
+    print(endpoint)
